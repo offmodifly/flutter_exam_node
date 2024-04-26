@@ -1,28 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_node_store/app_router.dart';
 import 'package:flutter_node_store/themes/styles.dart';
-import 'package:logger/logger.dart';
+import 'package:flutter_node_store/utils/utility.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Logger
-final logger = Logger(
-  printer: PrettyPrinter(
-    methodCount: 1,
-    colors: true,
-    printEmojis: true,
-    printTime: false,
-  ),
-);
 
-// Test Logger
-// void testLogger() {
-//   logger.t('Verbose log');
-//   logger.d('Debug log');
-//   logger.i('Info log');
-//   logger.w('Warning log');
-//   logger.e('Error log');
-//   logger.f('What a terrible failure log');
-// }
+
+
+
 
 // กำหนดตัวแปร initialRoute ให้กับ MaterialApp
 var initialRoute;
@@ -30,6 +16,7 @@ var initialRoute;
 void main() async {
 
   // Test Logger
+  Utility().testLogger();
   // testLogger();
 
   // ต้องเรียกใช้ WidgetsFlutterBinding.ensureInitialized()

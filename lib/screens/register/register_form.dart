@@ -146,7 +146,7 @@ class RegisterForm extends StatelessWidget {
 
                       var body = jsonDecode(response);
 
-                      logger.i(body);
+                     Utility().logger.i(body);
 
                       if(body['message'] == 'No Network Connection'){
                         // แจ้งเตือนว่าไม่มีการเชื่อมต่อ Internet

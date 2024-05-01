@@ -157,13 +157,13 @@ class RegisterForm extends StatelessWidget {
                         );
                       }else{
                         if(body['status'] == 'ok'){
-                          // แจ้งเตือนว่าลงทะเบียนสำเร็จ
-                          // Utility.showAlertDialog(
-                          //   context, 
-                          //   'แจ้งเตือน', 
-                          //   body['message']
-                          // );
-                          // ส่งกลับไปหน้า Login
+                         // แจ้งเตือนว่าลงทะเบียนสำเร็จ
+                          Utility.showAlertDialog(
+                            context, 
+                            'แจ้งเตือน', 
+                            body['message']
+                          );
+                         // ส่งกลับไปหน้า Login
                           Navigator.pushReplacementNamed(context, AppRouter.login);
                         }else{
                           // แจ้งเตือนว่าลงทะเบียนไม่สำเร็จ

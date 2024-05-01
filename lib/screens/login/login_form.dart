@@ -1,10 +1,14 @@
 // ignore_for_file: unused_field, must_be_immutable
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_node_store/app_router.dart';
 import 'package:flutter_node_store/components/custom_textfield.dart';
 import 'package:flutter_node_store/components/rounded_button.dart';
 import 'package:flutter_node_store/components/social_media_options.dart';
+import 'package:flutter_node_store/services/rest_api.dart';
+import 'package:flutter_node_store/utils/utility.dart';
 
 class LoginForm extends StatelessWidget {
   LoginForm({Key? key}) : super(key: key);
@@ -87,7 +91,7 @@ class LoginForm extends StatelessWidget {
                 ),
                 RoundedButton(
                     label: "LOGIN",
-                    onPressed: () {
+                    onPressed: () async {
 
                       // ตรวจสอบข้อมูลฟอร์ม
                       if (_formKeyLogin.currentState!.validate()) {
@@ -96,8 +100,25 @@ class LoginForm extends StatelessWidget {
                         _formKeyLogin.currentState!.save();
                         
                         // แสดงข้อมูลที่บันทึกใน Console
-                        print("Email: ${_emailController.text}");
-                        print("Password: ${_passwordController.text}");
+                        // print("Email: ${_emailController.text}");
+                        // print("Password: ${_passwordController.text}");
+                        var response = await CallAPI().loginAPI(
+                          {
+                            "email": _emailController.text,
+                            "password": _passwordController.text 
+                          }
+                        );
+                        var body = jsonDecode(response);
+                        Utility().logger.i(body);
+                        if(body["message"] == "No Network Connection"){
+                          Utility.showAlertDialog(context, '', '${body["message"]}');
+                        }else{
+                          if(body["status"]=="ok"){
+                            Utility.showAlertDialog(context, body["status"], '${body["message"]}');
+                          }else{
+                            Utility.showAlertDialog(context, body["message"], '${body["message"]}');
+                          }
+                        }
                       }
 
                     })

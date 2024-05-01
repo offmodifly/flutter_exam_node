@@ -13,45 +13,48 @@ class ResponsiveLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [primaryDark, primary],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+      body: GestureDetector(
+        onTap: (){FocusScope.of(context).requestFocus(FocusNode());},
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [primaryDark, primary],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
           ),
-        ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Card(
-                  elevation: 12,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-
-                  // Using for responsive layout
-                  child: LayoutBuilder(
-                    builder: (
-                      BuildContext context,
-                      BoxConstraints constraints,
-                    ){
-                      // เราจะใช้ constraints มาเช็คว่าหน้าจอของเรามีขนาดเท่าไหร่
-                      Widget childWidget = mobileChild;
-                      if(constraints.maxWidth > 800){
-                        childWidget = webChild;
+          child: Center(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Card(
+                    elevation: 12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+        
+                    // Using for responsive layout
+                    child: LayoutBuilder(
+                      builder: (
+                        BuildContext context,
+                        BoxConstraints constraints,
+                      ){
+                        // เราจะใช้ constraints มาเช็คว่าหน้าจอของเรามีขนาดเท่าไหร่
+                        Widget childWidget = mobileChild;
+                        if(constraints.maxWidth > 800){
+                          childWidget = webChild;
+                        }
+                        return childWidget;
                       }
-                      return childWidget;
-                    }
+                    ),
+        
                   ),
-
                 ),
               ),
             ),
-          ),
-        )
+          )
+        ),
       ),
     );
   }

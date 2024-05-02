@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Utility {
   // Logger
@@ -21,7 +22,37 @@ class Utility {
     logger.e('Error log');
     logger.f('What a terrible failure log');
   }
-  // Check Network Connection
+
+  // ---------เพื่อให้สามารถเรียกใช้ SharedPreferences ได้
+  static SharedPreferences? _preferences;
+  static Future initSharedPerfs() async => _preferences = await SharedPreferences.getInstance();
+
+  //Get Shared Preferences
+  static dynamic getSharedPreference(String key){
+    if(_preferences == null) return null;
+    return _preferences!.get(key);
+  }
+  
+  // set Shared Preferences
+  static Future<bool> setSharedPreference(String key, bool bool) async{
+    if(_preferences == null) return false;
+    return await _preferences!.remove(key);
+  }
+
+  //Clear Shared Preferences
+  static Future<bool> clearSharedPrefernce() async{
+    if(_preferences == null) return false;
+    return await _preferences!.clear();
+  }
+
+  //Check Shared Preferences
+  static Future<bool> checkSharedPreference(String key) async{
+    if(_preferences == null) return false;
+    return _preferences!.containsKey(key);
+  }
+  
+  //--------------------------------------------------
+    // Check Network Connection
   static Future<String> checkNetwork() async {
     
     var checkNetwork = await Connectivity().checkConnectivity();

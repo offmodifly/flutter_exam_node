@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:flutter_node_store/models/product_model.dart';
 import 'package:flutter_node_store/services/dio_config.dart';
 import 'package:flutter_node_store/utils/utility.dart';
 
@@ -7,6 +8,7 @@ class CallAPI {
 
   // สร้าง Dio Instance
   final Dio _dio = DioConfig.dio;
+  final Dio _dioWithAuth = DioConfig.dioWithAuth;
 
   // Register API
   registerAPI(data) async {
@@ -40,6 +42,21 @@ class CallAPI {
         Utility().logger.e(e);
       }
     }
+  }
+
+  // CRUD PRODUCT
+
+  // แสดงผล สินค้าทั้งหมด
+  Future<List<ProductModel>> getAllProducts() async{
+    final response = await _dioWithAuth.get('products');
+    if(response.statusCode == 200){
+      Utility().logger.d(response.data);
+      final List<ProductModel> products = productModelFromJson(
+        json.encode(response.data),
+      );
+      return products;
+    }
+    throw Exception('Failed to load products');
   }
 
 }

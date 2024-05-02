@@ -28,6 +28,9 @@ void main() async {
   if(Utility.getSharedPreference('welcomeStatus') == true) {
     // ถ้าเคยแสดง Intro แล้ว ให้ไปยังหน้า Login
     initialRoute = AppRouter.login;
+  } else if(Utility.getSharedPreference('loginStatus') == true) {
+    // ถ้าเคย login แล้วให้ไป Dashboard
+    initialRoute = AppRouter.dashboard;
   } else {
     // ถ้ายังไม่เคยแสดง Intro ให้ไปยังหน้า Welcome
     initialRoute = AppRouter.welcome;

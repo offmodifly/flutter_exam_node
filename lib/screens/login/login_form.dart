@@ -115,6 +115,12 @@ class LoginForm extends StatelessWidget {
                         }else{
                           if(body["status"]=="ok"){
                             Utility.showAlertDialog(context, body["status"], '${body["message"]}');
+                            // บันทึกข้อมูลลงในตัวแปร SharedPreferences
+                            await Utility.setSharedPreference('loginStatus',true);
+                            await Utility.setSharedPreference('token', body["token"]);
+                            await Utility.setSharedPreference('user',body["user"]);
+
+                            Navigator.pushReplacementNamed(context, AppRouter.dashboard);
                           }else{
                             Utility.showAlertDialog(context, body["message"], '${body["message"]}');
                           }
